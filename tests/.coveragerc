@@ -1,0 +1,3 @@
+[run]
+source = ../modelformhistory/
+omit = *tests*
