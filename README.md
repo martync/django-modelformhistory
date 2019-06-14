@@ -4,6 +4,11 @@ Django ModelForm History
 django-modelformhistory will save your modelform updates and store the human-readable values. The main goal is only to show the users what has been updated on a modelForms. If you search for a more lowlevel history app, consider using django-reversion or django-simple-history
 
 
+Warning
+-------
+
+This package is under developpement. It has poor features and may be unstable. Don't use it in production yet. 
+
 
 Requirements
 ------------
@@ -33,7 +38,7 @@ INSTALLED_APPS = (
 Usage
 -----
 
-Inherit your modelForm with `HistoryModelFormMixin`
+Inherit your ModelForm with `HistoryModelFormMixin`
 
 ```python
 from modelformhistory.forms import HistoryModelFormMixin
@@ -42,28 +47,17 @@ class MyModelForm(HistoryModelFormMixin, forms.ModelForm):
    ...
 ```
 
+You can get the user that has made the change by : 
+
+* Either pass the `request` on the form init
+* or implement a `get_history_user` method on your ModelForm that will return a `auth.User` object
 
 
-```html
-{% load multiple_auth_tags %}
+TODO
+----
 
-{% block content %}
-    {% get_logged_in_users as logged_in_users %}
-    <ul>
-        {% for u in logged_in_users %}
-            <li>
-                {% if u != request.user %}
-                    <b>{{ u.username }}</b> - {{ u.get_full_name }}
-                {% else %}
-                    <a href="{% url "multiauth_switch" forloop.counter0 %}">
-                        <b>{{ u.username }}</b> - {{ u.get_full_name }}
-                    </a>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="{% url "multiauth_login" %}">Add account</a>
-{% endblock content %}
-```
-
+ * Querying models history easily
+ * Provide generic views to see history by object, user & both
+ * Add more support and tests for filefield, boolean
+ * FR translation
 
