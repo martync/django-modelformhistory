@@ -1,5 +1,5 @@
 Django ModelForm History
-====================
+========================
 
 django-modelformhistory will save your modelform updates and store the human-readable values. The main goal is only to show the users what has been updated on a modelForms. If you search for a more lowlevel history app, consider using django-reversion or django-simple-history
 
@@ -25,14 +25,7 @@ pip install django-modelformhistory
 ```
 
 
-Add `modelformhistory` to INSTALLED_APPS
-
-```python
-INSTALLED_APPS = (
-    ...
-    "modelformhistory",
-)
-```
+Then, add `modelformhistory` to INSTALLED_APPS
 
 
 Usage
@@ -44,7 +37,7 @@ Inherit your ModelForm with `HistoryModelFormMixin`
 from modelformhistory.forms import HistoryModelFormMixin
 
 class MyModelForm(HistoryModelFormMixin, forms.ModelForm):
-   ...
+    pass
 ```
 
 You can get the user that has made the change by : 

@@ -21,11 +21,11 @@ classifiers = [
 
 setup(
     name="django-modelformhistory",
-    version="1.2",
+    version="1.0",
     url="https://github.com/EngageSports/django-modelformhistory",
     packages=find_packages(),
-    long_description=description.strip(),
-    description=("High level history saving for ModelForms"),
+    long_description_content_type="text/markdown",
+    long_description=description,
     author="Martyn CLEMENT",
     author_email="martyn.clement@gmail.com",
     include_package_data=True,
