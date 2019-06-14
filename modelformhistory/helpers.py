@@ -17,7 +17,7 @@ def get_human_value_for_field(bounded_field, value):
 
     value = bounded_field.field.clean(value)
 
-    if hasattr(value, "__iter__"):
+    if not isinstance(value, str) and hasattr(value, "__iter__"):
         # iterable
         return ", ".join([force_text(i) for i in value])
 
