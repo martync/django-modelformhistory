@@ -13,11 +13,11 @@ install:
   - pip install coverage django-nose coveralls
 
 script:
-  - coverage run tests/manage.py test
+  - cd tests && coverage run manage.py test && mv .coverage ../ && cd ..
 
 notifications:
     email:
-      - martyn@engage-sports.com
+      - martyn.clement@gmail.com
 
 after_success:
   - coveralls
