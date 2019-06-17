@@ -10,7 +10,7 @@ env:
 
 install:
   - pip install -r requirements.txt
-  - pip install coverage django-nose coveralls
+  - pip install coverage django-nose coveralls Pillow
 
 script:
   - cd tests && coverage run manage.py test && mv .coverage ../ && cd ..

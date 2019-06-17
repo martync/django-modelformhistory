@@ -32,6 +32,7 @@ class Foo(HistoryBaseModel, models.Model):
     bar = models.ForeignKey(Bar, verbose_name="Name of the bar", null=True, blank=True)
     baz = models.ManyToManyField(Baz, verbose_name="Select some baz", blank=True)
     yesorno = models.BooleanField("Check for yes", default=True)
+    picture = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name

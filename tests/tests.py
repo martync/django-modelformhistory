@@ -1,11 +1,12 @@
 # coding: utf-8
 from __future__ import print_function, division, absolute_import, unicode_literals
+import os
 
 from django.apps import apps
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase, RequestFactory
-
 
 from modelformhistory.admin import HistoryModelAdmin
 from modelformhistory.apps import ModelformhistoryConfig
@@ -172,6 +173,33 @@ class ModelFormHistoryTestCase(TestCase):
         entry = Entry.objects.all()[0]
         changed_data = entry.changeddata_set.all()[0]
         self.check_changed_data(changed_data, "Check for yes", "Yes", "No")
+
+    def test_update_filefield(self):
+        data = self.indentical_datas.copy()
+        upload_file = open("images/poney.jpeg", "rb")
+        file_dict = {"picture": SimpleUploadedFile(upload_file.name, upload_file.read())}
+        form = FooModelForm(user=self.user, instance=self.foo, data=data, files=file_dict)
+        self.assertTrue(form.is_valid())
+        form.save()
+        self.assertEqual(Entry.objects.all().count(), 1)
+        entry = Entry.objects.all()[0]
+        self.assertEqual(entry.changeddata_set.all().count(), 1)
+        changed_data = entry.changeddata_set.all()[0]
+        self.check_changed_data(changed_data, "Picture", None, "poney.jpeg")
+
+        upload_file = open("images/poney-bw.jpg", "rb")
+        file_dict = {"picture": SimpleUploadedFile(upload_file.name, upload_file.read())}
+        form = FooModelForm(user=self.user, instance=self.foo, data=data, files=file_dict)
+        self.assertTrue(form.is_valid())
+        form.save()
+        self.assertEqual(Entry.objects.all().count(), 2)
+        entry = Entry.objects.all()[0]
+        self.assertEqual(entry.changeddata_set.all().count(), 1)
+        changed_data = entry.changeddata_set.all()[0]
+        self.check_changed_data(changed_data, "Picture", "poney.jpeg", "poney-bw.jpg")
+
+        os.remove("poney.jpeg")
+        os.remove("poney-bw.jpg")
 
     def test_add(self):
         data = self.indentical_datas.copy()

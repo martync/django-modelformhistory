@@ -47,7 +47,7 @@ class HistoryModelFormMixin(object):
 
     def save(self, *args, **kwargs):
         obj = super(HistoryModelFormMixin, self).save(*args, **kwargs)
-        if self.has_changed():
+        if self.has_changed() or self.files:
             changelog = []
             if self._history_action_type == CHANGE:
                 bounded_fields = dict([(f.name, f) for f in self])
@@ -59,6 +59,8 @@ class HistoryModelFormMixin(object):
                         changelog.append(
                             {"label": field.label, "initial_value": initial_value, "changed_value": changed_value}
                         )
+                # for fieldname, file_upload in self.files.items():
+
             Entry.create(
                 user=self._history_user,
                 content_object=self.instance,

@@ -14,7 +14,7 @@ INSTALLED_APPS = (
     "modelformhistory",
     "django_nose",
 )
-TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
+# TEST_RUNNER = "django_nose.NoseTestSuiteRunner"
 
 TEMPLATES = [
     {

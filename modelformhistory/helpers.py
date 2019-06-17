@@ -1,10 +1,10 @@
 # coding: utf-8
 from __future__ import print_function, division, absolute_import, unicode_literals
 
+from django import forms
+from django.db import models
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
-from django.db import models
-from django import forms
 
 
 def get_object_repr(instance):
@@ -14,6 +14,9 @@ def get_object_repr(instance):
 def get_human_value_for_field(bounded_field, value):
     if value is None:
         return _("Empty")
+
+    if isinstance(bounded_field.field, forms.FileField):
+        return getattr(value, "name", "{}".format(value))
 
     value = bounded_field.field.clean(value)
 
@@ -32,8 +35,5 @@ def get_human_value_for_field(bounded_field, value):
     elif type(value) == bool:
         # Boolean
         return {True: _("Yes"), False: _("No")}[value]
-
-    elif value is None:
-        return _("None")
 
     return value
