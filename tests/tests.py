@@ -1,18 +1,49 @@
 # coding: utf-8
 from __future__ import print_function, division, absolute_import, unicode_literals
 
+from django.apps import apps
+from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
 from django.test import TestCase, RequestFactory
 
 
-from modelformhistory.models import Entry
+from modelformhistory.admin import HistoryModelAdmin
+from modelformhistory.apps import ModelformhistoryConfig
+
+from modelformhistory.forms import HistoryModelFormMixin
+from modelformhistory.models import Entry, ADDITION
 from sampleapp.models import Foo, Bar, Baz
 from sampleapp.forms import FooModelForm, FooModelFormRequest
 
 
 User = get_user_model()
 
-__all__ = ("ModelFormHistoryTestCase",)
+__all__ = ("ModelFormHistoryTestCase", "ModelFormHistoryAdminTestCase")
+
+
+class MockRequest:
+    pass
+
+
+class MockSuperUser:
+    def has_perm(self, perm):
+        return True
+
+
+request = MockRequest()
+request.user = MockSuperUser()
+
+
+class ModelFormHistoryAdminTestCase(TestCase):
+    def setUp(self):
+        bar = Bar.objects.create(name="bar")
+        self.foo = Foo.objects.create(name="Test foo", integer=1, choose_somthing="ok", bar=bar)
+        self.site = AdminSite()
+
+    def test_modeladmin_str(self):
+        ma = HistoryModelAdmin(Foo, self.site)
+        form = ma.get_form(request)()
+        self.assertIsInstance(form, HistoryModelFormMixin)
 
 
 class ModelFormHistoryTestCase(TestCase):
@@ -42,6 +73,10 @@ class ModelFormHistoryTestCase(TestCase):
         self.assertEqual(changed_data.label, label)
         self.assertEqual(changed_data.initial_value, initial_value)
         self.assertEqual(changed_data.changed_value, changed_value)
+
+    def test_str(self):
+        entry = Entry.create(self.user, self.foo, ADDITION, changelog=[])
+        self.assertEqual(str(entry), "User TEST has added 'Foo Test foo'")
 
     def test_no_change(self):
         form = FooModelForm(user=self.user, instance=self.foo, data=self.indentical_datas)
@@ -149,3 +184,20 @@ class ModelFormHistoryTestCase(TestCase):
         request.user = self.user
         form = FooModelFormRequest(request=request, instance=None, data=self.indentical_datas)
         self.assertEqual(form.get_history_user(), self.user)
+
+    def test_get_history_entries(self):
+        self.assertEqual(self.foo.get_history_entries().count(), 0)
+        data = self.indentical_datas.copy()
+        data["name"] = "Another name"
+        form = FooModelForm(user=self.user, instance=self.foo, data=data)
+        form.save()
+        self.assertEqual(self.foo.get_history_entries().count(), 1)
+        entry = self.foo.get_history_entries()[0]
+        self.assertEqual(entry.content_object, self.foo)
+        self.assertEqual(entry.changeddata_set.all().count(), 1)
+
+
+class ModelformhistoryConfigTest(TestCase):
+    def test_apps(self):
+        self.assertEqual(ModelformhistoryConfig.name, "modelformhistory")
+        self.assertEqual(apps.get_app_config("modelformhistory").name, "modelformhistory")

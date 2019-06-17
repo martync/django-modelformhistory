@@ -3,7 +3,7 @@ from __future__ import print_function, division, absolute_import, unicode_litera
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-
+from modelformhistory.models import HistoryBaseModel
 
 FOO_CHOICES = (("ok", "It's OK"), ("nok", "It's not OK"))
 
@@ -25,7 +25,7 @@ class Baz(models.Model):
 
 
 @python_2_unicode_compatible
-class Foo(models.Model):
+class Foo(HistoryBaseModel, models.Model):
     name = models.CharField("Name of this instance", max_length=100)
     integer = models.IntegerField("Type your favorite integer")
     choose_somthing = models.CharField("Make your choice", max_length=100, choices=FOO_CHOICES, default="ok")

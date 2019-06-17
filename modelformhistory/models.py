@@ -80,3 +80,23 @@ class ChangedData(models.Model):
     label = models.CharField(_("Label"), max_length=200)
     initial_value = models.TextField(_("Initial value"), blank=True, null=True)
     changed_value = models.TextField(_("Updated value"), blank=True, null=True)
+
+
+class HistoryBaseModel(models.Model):
+    """Base model that implements utilities to query history entries of your models.
+    Just extends your model with this one :
+
+    >> class MyModel(HistoryBaseModel):
+    >>     pass
+    >>
+    >> inst = MyModel.objects.get(...)
+    >> inst.get_history_entries()
+    >> # Returns <Entry queryset>
+
+    """
+
+    def get_history_entries(self):
+        return Entry.objects.filter(object_id=self.pk, object_type=ContentType.objects.get_for_model(self))
+
+    class Meta:
+        abstract = True
