@@ -54,15 +54,11 @@ class HistoryModelFormMixin(object):
                 for fieldname in self.changed_data:
                     field = bounded_fields.get(fieldname)
                     initial_value = get_human_value_for_field(field, field.initial)
-
-                    # import ipdb
-
-                    # ipdb.set_trace()
-
                     changed_value = get_human_value_for_field(field, field.data)
-                    changelog.append(
-                        {"label": field.label, "initial_value": initial_value, "changed_value": changed_value}
-                    )
+                    if initial_value != changed_value:
+                        changelog.append(
+                            {"label": field.label, "initial_value": initial_value, "changed_value": changed_value}
+                        )
             Entry.create(
                 user=self._history_user,
                 content_object=self.instance,

@@ -67,6 +67,7 @@ class ModelFormHistoryTestCase(TestCase):
             "baz": [str(baz.id) for baz in self.foo.baz.all()],
             "integer": self.foo.integer,
             "choose_somthing": self.foo.choose_somthing,
+            "yesorno": "1",
         }
 
     def check_changed_data(self, changed_data, label, initial_value, changed_value):
@@ -149,9 +150,6 @@ class ModelFormHistoryTestCase(TestCase):
         entry = Entry.objects.all()[0]
         changed_data = entry.changeddata_set.all()[0]
         self.assertEqual(entry.changeddata_set.all().count(), 1)
-        self.assertEqual(changed_data.label, "Select some baz")
-        self.assertEqual(changed_data.initial_value, "baz, bza")
-        self.assertEqual(changed_data.changed_value, "zab")
         self.check_changed_data(changed_data, "Select some baz", "baz, bza", "zab")
 
         # Save an empty value on M2M
@@ -163,6 +161,17 @@ class ModelFormHistoryTestCase(TestCase):
         self.assertEqual(entry.changeddata_set.all().count(), 1)
         changed_data = entry.changeddata_set.all()[0]
         self.check_changed_data(changed_data, "Select some baz", "zab", "Empty")
+
+    def test_update_boolean(self):
+        data = self.indentical_datas.copy()
+
+        data["yesorno"] = ""
+        form = FooModelForm(user=self.user, instance=self.foo, data=data)
+        form.save()
+        self.assertEqual(Entry.objects.all().count(), 1)
+        entry = Entry.objects.all()[0]
+        changed_data = entry.changeddata_set.all()[0]
+        self.check_changed_data(changed_data, "Check for yes", "Yes", "No")
 
     def test_add(self):
         data = self.indentical_datas.copy()

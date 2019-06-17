@@ -31,6 +31,7 @@ class Foo(HistoryBaseModel, models.Model):
     choose_somthing = models.CharField("Make your choice", max_length=100, choices=FOO_CHOICES, default="ok")
     bar = models.ForeignKey(Bar, verbose_name="Name of the bar", null=True, blank=True)
     baz = models.ManyToManyField(Baz, verbose_name="Select some baz", blank=True)
+    yesorno = models.BooleanField("Check for yes", default=True)
 
     def __str__(self):
         return self.name

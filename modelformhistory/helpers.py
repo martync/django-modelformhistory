@@ -29,6 +29,11 @@ def get_human_value_for_field(bounded_field, value):
         # choiceField
         return dict(bounded_field.field.choices).get(value)
 
-        # TODO Boolean
+    elif type(value) == bool:
+        # Boolean
+        return {True: _("Yes"), False: _("No")}[value]
+
+    elif value is None:
+        return _("None")
 
     return value
