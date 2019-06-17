@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-17 10:21+0200\n"
+"PO-Revision-Date: 2019-06-17 10:23+0200\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.5\n"
+
+#: helpers.py:16
+msgid "Empty"
+msgstr "Vide"
+
+#: models.py:18
+msgid "Addition"
+msgstr "Ajout"
+
+#: models.py:18
+msgid "Change"
+msgstr "Modification"
+
+#: models.py:18
+msgid "Deletion"
+msgstr "Suppression"
+
+#: models.py:21
+msgid "{} has added '{}'"
+msgstr "{} a ajouté '{}'"
+
+#: models.py:22
+msgid "{} has updated '{}'"
+msgstr "{} a mis à jour '{}'"
+
+#: models.py:23
+msgid "{} has deleted '{}'"
+msgstr "{} a supprimé '{}'"
+
+#: models.py:59
+msgid "Anonymous"
+msgstr "Anonyme"
+
+#: models.py:80
+msgid "Label"
+msgstr "Libellé"
+
+#: models.py:81
+msgid "Initial value"
+msgstr "Valeur initiale"
+
+#: models.py:82
+msgid "Updated value"
+msgstr "Nouvelle valeur"

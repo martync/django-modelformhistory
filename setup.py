@@ -21,7 +21,7 @@ classifiers = [
 
 setup(
     name="django-modelformhistory",
-    version="1.0.1",
+    version="1.0.3",
     url="https://github.com/EngageSports/django-modelformhistory",
     packages=find_packages(),
     long_description_content_type="text/markdown",

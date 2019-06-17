@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import ugettext_lazy as _
 
 DEBUG = True
 SECRET_KEY = "tests"
@@ -35,3 +36,8 @@ MIDDLEWARE = (
     "django.contrib.auth.middleware.AuthenticationMiddleware",
 )
 LOGIN_REDIRECT_URL = "/"
+
+USE_I18N = True
+LANGUAGE_CODE = "en"
+
+LANGUAGES = (("en", _("English")), ("fr", _("French")))

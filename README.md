@@ -52,8 +52,8 @@ You can get the user that has made the change by :
 TODO
 ----
 
- * Querying models history easily
+ * ~~Querying models history easily~~
  * Provide generic views to see history by object, user & both
  * Add more support and tests for filefield, boolean
- * FR translation
+ * ~~FR translation~~
 
