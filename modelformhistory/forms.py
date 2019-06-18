@@ -59,7 +59,6 @@ class HistoryModelFormMixin(object):
                         changelog.append(
                             {"label": field.label, "initial_value": initial_value, "changed_value": changed_value}
                         )
-                # for fieldname, file_upload in self.files.items():
 
             Entry.create(
                 user=self._history_user,

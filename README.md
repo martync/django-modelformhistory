@@ -45,7 +45,7 @@ class MyModelForm(HistoryModelFormMixin, forms.ModelForm):
 
 You can get the user that has made the change by : 
 
-* Either pass the `request` on the form init
+* Either pass the `request` on the form init, then the request.user will be automatically sent to the new history Entry
 * or implement a `get_history_user` method on your ModelForm that will return a `auth.User` object
 
 
