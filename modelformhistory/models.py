@@ -135,7 +135,12 @@ class HistoryBaseModel(models.Model):
     """
 
     def get_history_entries(self):
+        """Returns all the history Entries for that model"""
         return Entry.get_for_model(self)
+
+    def log_custom_history(self, user, message):
+        """Save a message in history for that instance"""
+        return Entry.create(user=user, content_object=self, short_message=message)
 
     class Meta:
         abstract = True

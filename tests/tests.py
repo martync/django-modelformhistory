@@ -235,8 +235,16 @@ class ModelFormHistoryTestCase(TestCase):
         self.assertEqual(entry.content_object, self.foo)
         self.assertEqual(entry.changeddata_set.all().count(), 1)
 
-    def test_log_history(self):
-        log_history(None, self.foo, "Added custom action on this object")
+    def test_log_custom_history(self):
+        self.foo.log_custom_history(self.user, "Doing a custom action")
+        self.assertEqual(self.foo.get_history_entries().count(), 1)
+        entry = self.foo.get_history_entries()[0]
+        self.assertEqual(entry.get_user_full_name(), self.user.get_full_name())
+        self.assertEqual(entry.short_message, "Doing a custom action")
+        self.assertEqual(entry.changeddata_set.all().count(), 0)
+
+    def test_anonymous_log_entry_without_changeddata(self):
+        Entry.create(None, self.foo, short_message="Added custom action on this object")
         self.assertEqual(self.foo.get_history_entries().count(), 1)
         entry = self.foo.get_history_entries()[0]
         self.assertEqual(entry.get_user_full_name(), "Anonymous")
