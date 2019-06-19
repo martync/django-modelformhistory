@@ -23,7 +23,7 @@ setup(
     name="django-modelformhistory",
     version="1.0.5",
     url="https://github.com/EngageSports/django-modelformhistory",
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     long_description_content_type="text/markdown",
     long_description=description,
     author="Martyn CLEMENT",
