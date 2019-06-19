@@ -13,7 +13,6 @@ from modelformhistory.apps import ModelformhistoryConfig
 
 from modelformhistory.forms import HistoryModelFormMixin
 from modelformhistory.models import Entry, ADDITION
-from modelformhistory.utils import log_history
 from sampleapp.models import Foo, Bar, Baz
 from sampleapp.forms import FooModelForm, FooModelFormRequest
 

@@ -2,7 +2,7 @@ Django ModelForm History
 ========================
 
 [![Build Status](https://travis-ci.org/martync/django-modelformhistory.svg?branch=master)](https://travis-ci.org/martync/django-modelformhistory)
-[![Coverage Status](https://coveralls.io/repos/github/martync/django-modelformhistory/badge.svg?branch=master)](https://coveralls.io/github/martync/django-modelformhistory?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/martync/django-modelformhistory/badge.svg?branch=master&refresh=cache)](https://coveralls.io/github/martync/django-modelformhistory?branch=master)
 
 django-modelformhistory will save your modelform updates and store the human-readable values. The main goal is only to show the users what has been updated on a modelForms. If you search for a more lowlevel history app, consider using django-reversion or django-simple-history
 
@@ -52,8 +52,9 @@ You can get the user that has made the change by :
 TODO
 ----
 
- * ~~Querying models history easily~~
  * Provide generic views to see history by object, user & both
- * Add more support and tests for filefield, boolean
+ * Improve doc
+ * ~~Querying models history easily~~
+ * ~~Add more support and tests for filefield, boolean~~
  * ~~FR translation~~
 
