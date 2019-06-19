@@ -13,6 +13,7 @@ from modelformhistory.apps import ModelformhistoryConfig
 
 from modelformhistory.forms import HistoryModelFormMixin
 from modelformhistory.models import Entry, ADDITION
+from modelformhistory.utils import log_history
 from sampleapp.models import Foo, Bar, Baz
 from sampleapp.forms import FooModelForm, FooModelFormRequest
 
@@ -72,6 +73,7 @@ class ModelFormHistoryTestCase(TestCase):
         }
 
     def check_changed_data(self, changed_data, label, initial_value, changed_value):
+        self.assertEqual(str(changed_data), label)
         self.assertEqual(changed_data.label, label)
         self.assertEqual(changed_data.initial_value, initial_value)
         self.assertEqual(changed_data.changed_value, changed_value)
@@ -232,6 +234,14 @@ class ModelFormHistoryTestCase(TestCase):
         entry = self.foo.get_history_entries()[0]
         self.assertEqual(entry.content_object, self.foo)
         self.assertEqual(entry.changeddata_set.all().count(), 1)
+
+    def test_log_history(self):
+        log_history(None, self.foo, "Added custom action on this object")
+        self.assertEqual(self.foo.get_history_entries().count(), 1)
+        entry = self.foo.get_history_entries()[0]
+        self.assertEqual(entry.get_user_full_name(), "Anonymous")
+        self.assertEqual(entry.short_message, "Added custom action on this object")
+        self.assertEqual(entry.changeddata_set.all().count(), 0)
 
 
 class ModelformhistoryConfigTest(TestCase):

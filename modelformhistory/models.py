@@ -55,7 +55,7 @@ class Entry(models.Model):
         return self.short_message
 
     @staticmethod
-    def create(user, content_object, action_type=CHANGE, changelog=None, object_repr="", short_message=None):
+    def create(user, content_object, action_type=CHANGE, changelog=None, short_message=None):
         """Saves an Entry log history of the 'content_object'
 
         Args:
@@ -70,13 +70,13 @@ class Entry(models.Model):
             Entry: The freshly created Entry
         """
         changelog = changelog or []
-        entry = Entry(created_by=user, action_type=action_type)
-        if content_object:
-            entry.object_type = ContentType.objects.get_for_model(content_object)
-            entry.object_id = content_object.id
-            entry.object_repr = get_object_repr(content_object)
-        else:
-            entry.object_repr = object_repr
+        entry = Entry.objects.create(
+            created_by=user,
+            action_type=action_type,
+            object_type=ContentType.objects.get_for_model(content_object),
+            object_id=content_object.id,
+            object_repr=get_object_repr(content_object),
+        )
 
         if not short_message:
             short_message = ACTION_MESSAGES[action_type].format(entry.get_user_full_name(), entry.object_repr)
