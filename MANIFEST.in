@@ -1,3 +1,5 @@
 include AUTHORS.md
 include CHANGELOG.md
 include README.md
+include modelformhistory/locale/fr_FR/LC_MESSAGES/django.po
+include modelformhistory/locale/fr_FR/LC_MESSAGES/django.mo

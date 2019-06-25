@@ -2,6 +2,12 @@ ChangeLog
 =========
 
 
+1.0.7 2019-06-25
+----------------
+
+- Added localisation files to package
+
+
 1.0.6 2019-06-19
 ----------------
 
