@@ -11,6 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 from .helpers import get_object_repr
 
 
+OBJECT_REPR_MAX_LENGTH = 200  # max character length
+
 ADDITION = 1
 CHANGE = 2
 DELETION = 3
@@ -43,7 +45,7 @@ class Entry(models.Model):
     object_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(blank=True, null=True)
     content_object = GenericForeignKey("object_type", "object_id")
-    object_repr = models.CharField(max_length=600)
+    object_repr = models.CharField(max_length=OBJECT_REPR_MAX_LENGTH)
 
     action_type = models.PositiveSmallIntegerField(choices=ACTION_TYPE_CHOICES)
     short_message = models.TextField(null=True, blank=True)
@@ -75,7 +77,7 @@ class Entry(models.Model):
             action_type=action_type,
             object_type=ContentType.objects.get_for_model(content_object),
             object_id=content_object.id,
-            object_repr=get_object_repr(content_object),
+            object_repr=get_object_repr(content_object)[:OBJECT_REPR_MAX_LENGTH],
         )
 
         if not short_message:
