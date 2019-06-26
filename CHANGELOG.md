@@ -2,6 +2,11 @@ ChangeLog
 =========
 
 
+1.0.8 2019-06-26
+----------------
+
+- Changed object_repr charfield length to 600 max chars
+
 1.0.7 2019-06-25
 ----------------
 

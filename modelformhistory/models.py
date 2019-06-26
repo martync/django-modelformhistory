@@ -43,7 +43,7 @@ class Entry(models.Model):
     object_type = models.ForeignKey(ContentType, blank=True, null=True)
     object_id = models.PositiveIntegerField(blank=True, null=True)
     content_object = GenericForeignKey("object_type", "object_id")
-    object_repr = models.CharField(max_length=200)
+    object_repr = models.CharField(max_length=600)
 
     action_type = models.PositiveSmallIntegerField(choices=ACTION_TYPE_CHOICES)
     short_message = models.TextField(null=True, blank=True)
