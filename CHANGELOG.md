@@ -2,7 +2,7 @@ ChangeLog
 =========
 
 
-1.0.10 2019-06-27
+1.0.11 2019-06-27
 ----------------
 
 - Catch Validation error and log error

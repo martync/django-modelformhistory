@@ -26,7 +26,7 @@ def get_human_value_for_field(bounded_field, value):
 
     try:
         value = bounded_field.field.clean(value)
-    except ValidationError, e:
+    except ValidationError as e:
         if settings.DEBUG:
             logger.error("ValidationError on " + bounded_field.name + " : " + str(e))
         return value
