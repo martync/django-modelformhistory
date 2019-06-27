@@ -2,10 +2,17 @@ ChangeLog
 =========
 
 
+1.0.10 2019-06-27
+----------------
+
+- Catch Validation error and log error
+
+
 1.0.9 2019-06-26
 ----------------
 
 - Truncate object_repr charfield length to 200 max chars
+
 
 1.0.7 2019-06-25
 ----------------
